@@ -14,7 +14,7 @@ createCCA()
 
 
 const itemsPanelBody = document.querySelector('.items-panel__body')
-itemsPanelBody.append(createLiFromIssue(issueDuplicate))
+const list = document.querySelector('.list')
 const checkedL = document.querySelector('.location-filter__check')
 const dFrom = document.querySelector('.issue-date-from')
 const dTo = document.querySelector('.issue-date-to')
@@ -31,4 +31,29 @@ itemsPanelBody.addEventListener("click", selectedLocationList(itemsPanelBody))
 itemsPanelBody.addEventListener("click", selectedTypLocationList(itemsPanelBody))
 itemsPanelBody.addEventListener("click", selectedDateLocationList(itemsPanelBody))
 itemsPanelBody.addEventListener("click", selectedStatusLocationList(itemsPanelBody))
+
+let arrayOfLi = createLiFromIssue(issueDuplicate)
+
+let offset = 0;
+let limit = 13;
+
+const observer = new IntersectionObserver((entity, observer) => {
+  if (entity[0].isIntersecting) {
+    observer.disconnect(entity[0]?.target); 
+    add((offset += limit)); 
+  }
+});
+
+add()
+function add(offset = 0) {
+  const liList = arrayOfLi.slice(offset, offset + limit).map((el, index, arr) => {
+    if (index === arr.length - 2) {
+      observer.observe(el);
+    }
+    return el;
+  });
+  liList.forEach((item) => {
+    list.append(item);
+  });
+}
 

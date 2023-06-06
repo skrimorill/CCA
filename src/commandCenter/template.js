@@ -42,6 +42,7 @@ export function createCCA() {
       </div>
     </div>
       <div class='items-panel__body'>
+        <ul class='list'></ul>
       </div>
     </div>
     </div>
