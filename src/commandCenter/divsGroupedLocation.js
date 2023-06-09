@@ -2,6 +2,7 @@ import { issueDuplicate } from './issue.js'
 import { createLiFromIssue } from './createLiFromIssue.js'
 
 const liGpouped = {}
+const arrayOfLi = createLiFromIssue(issueDuplicate)
 
 function prepareLocationObj(block) {
   const location = block.locationDist.map((el) => el.value)
@@ -11,13 +12,14 @@ function prepareLocationObj(block) {
   }, liGpouped)
 }
 
+GroupedLocationObj(issueDuplicate)
 function GroupedLocationObj(arr) {
   arr.forEach((block) => {
     prepareLocationObj(block)
   })
   return liGpouped
 }
-GroupedLocationObj(issueDuplicate)
+
 
 function isGroupedLocation(liGpouped) {
   const gblList = document.createElement('UL')
@@ -37,7 +39,6 @@ function isGroupedLocation(liGpouped) {
   return gblList
 } 
 
-
 function appendGroupedList(itemsPanelBody) {
   return (e) => {
     if (e.target.checked) {
@@ -45,13 +46,35 @@ function appendGroupedList(itemsPanelBody) {
       itemsPanelBody.append(isGroupedLocation(liGpouped))
     } else {
       itemsPanelBody.innerHTML = ""
-      itemsPanelBody.append(createLiFromIssue(issueDuplicate))
+      itemsPanelBody.append(list)
     }
   }
 }
+const list = document.createElement('UL')
+list.classList.add('list')
 
+let offset = 0;
+let limit = 13;
 
+const observer = new IntersectionObserver((entity, observer) => {
+  if (entity[0].isIntersecting) {
+    observer.disconnect(entity[0]?.target); 
+    add((offset += limit)); 
+  }
+});
 
+add()
+function add(offset = 0) {
+  const liList = arrayOfLi.slice(offset, offset + limit).map((el, index, arr) => {
+    if (index === arr.length - 2) {
+      observer.observe(el);
+    }
+    return el;
+  });
+  liList.forEach((item) => {
+    list.append(item);
+  });
+}
 export { isGroupedLocation, appendGroupedList}
 
 

@@ -41,6 +41,7 @@
 .gbl-sing__type {
   text-align: right;
   padding-right: .8rem;
+  cursor: pointer;
 } 
 
 .items-panel {
@@ -80,7 +81,7 @@
   flex-direction: column;
   border: 1px solid #000;
   border-radius: 5px;
-  max-width: 32rem;
+  max-width: 33rem;
 }
 
 .command-center__header {

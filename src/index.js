@@ -32,7 +32,9 @@ itemsPanelBody.addEventListener("click", selectedTypLocationList(itemsPanelBody)
 itemsPanelBody.addEventListener("click", selectedDateLocationList(itemsPanelBody))
 itemsPanelBody.addEventListener("click", selectedStatusLocationList(itemsPanelBody))
 
-let arrayOfLi = createLiFromIssue(issueDuplicate)
+
+
+const arrayOfLi = createLiFromIssue(issueDuplicate)
 
 let offset = 0;
 let limit = 13;
