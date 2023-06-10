@@ -34,7 +34,10 @@ function sortByStatus(itemsPanelBody) {
     }
       if (statusValue === '') {
       itemsPanelBody.firstElementChild.remove()
-      itemsPanelBody.append(createLiFromIssue(issueDuplicate))
+      const list = document.createElement('UL')
+      list.classList.add('list')
+      list.append(...createLiFromIssue(issueDuplicate))
+      itemsPanelBody.append(list)
       }
     }
   }

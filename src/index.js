@@ -25,13 +25,12 @@ const statusType = document.querySelector('.issue-status')
 checkedL.addEventListener("change", appendGroupedList(itemsPanelBody))
 dFrom.addEventListener("blur", sortByDateFrom(itemsPanelBody))
 dTo.addEventListener("blur", sortByDateTo(itemsPanelBody))
-issueType.addEventListener("blur", sortByType(itemsPanelBody))
-statusType.addEventListener("blur", sortByStatus(itemsPanelBody))
+issueType.addEventListener("change", sortByType(itemsPanelBody))
+statusType.addEventListener("change", sortByStatus(itemsPanelBody))
 itemsPanelBody.addEventListener("click", selectedLocationList(itemsPanelBody))
 itemsPanelBody.addEventListener("click", selectedTypLocationList(itemsPanelBody))
 itemsPanelBody.addEventListener("click", selectedDateLocationList(itemsPanelBody))
 itemsPanelBody.addEventListener("click", selectedStatusLocationList(itemsPanelBody))
-
 
 
 const arrayOfLi = createLiFromIssue(issueDuplicate)

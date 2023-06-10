@@ -1,3 +1,8 @@
+.cca {
+  display: flex;
+  justify-content: center;
+}
+
 .list,
 .gbl-list,
 .location-list,
@@ -98,7 +103,9 @@
 
 .title {
   align-self: center;
-  margin-left: 20%;
+  margin-left: 8%;
+  font-size: 30px;
+  font-weight: 700;
 }
 
 .command-center__sort-panel {

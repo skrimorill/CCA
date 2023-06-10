@@ -3,7 +3,6 @@ import {isStatusDict, isLocation, isTitle, isStartDate} from "./divS.js"
 
 function createLiFromIssue(array) {
   let liToArray = []
-  
   array.forEach((block) => {
     const LI = document.createElement("LI")
     LI.classList.add('list-item')
@@ -17,7 +16,7 @@ function createLiFromIssue(array) {
     } if (block.IssueStatusDict) {
       LI.innerHTML += isStatusDict(block)
     }
-    return liToArray.push(LI)
+    liToArray.push(LI)
   })
   return liToArray
 }
