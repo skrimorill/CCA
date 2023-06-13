@@ -3,6 +3,7 @@ import { createLiFromIssue } from './createLiFromIssue.js'
 import { ObjForTypedGrouped, isGroupedLocationType } from './groupedByType.js'
 
 
+
 function sortByType(itemsPanelBody) {
   return (e) => {
     let objForTypeGrouped = {}
@@ -25,20 +26,59 @@ function sortByType(itemsPanelBody) {
     } else if (!types.includes(issueValue)) {
       issueValue = ''
     } else {
+      if (!statusValue && dateTo === '9999.99.99' && !dateFrom) {
       issueDuplicate.forEach((elem) => {
         if (elem.title.toLowerCase() === issueValue) {
           typedElems.push(elem)
         }
       })
+    } else if (statusValue && dateTo === '9999.99.99' && !dateFrom) {
+      issueDuplicate.forEach((elem) => {
+        let status = elem.IssueStatusDict.map((el) => el.value.toLowerCase()).join('') 
+        if (elem.title.toLowerCase() === issueValue && status === statusValue) {
+          typedElems.push(elem)
+          console.log(elem.startDate);
+        }
+      })
+    } else if (statusValue && dateTo === '9999.99.99' && dateFrom) { 
+            issueDuplicate.forEach((elem) => {
+        let status = elem.IssueStatusDict.map((el) => el.value.toLowerCase()).join('') 
+        if (elem.title.toLowerCase() === issueValue && status === statusValue && elem.startDate >= dateFrom) {
+          typedElems.push(elem)
+        }
+      })
+    } else if (statusValue && dateTo !== '9999.99.99' && dateFrom) {
+      issueDuplicate.forEach((elem) => {
+        let status = elem.IssueStatusDict.map((el) => el.value.toLowerCase()).join('') 
+        if (elem.title.toLowerCase() === issueValue && status === statusValue && elem.startDate >= dateFrom && elem.startDate <= dateTo) {
+          typedElems.push(elem)
+        }
+      })
+    } else if (!statusValue && dateTo === '9999.99.99' && dateFrom) {
+      issueDuplicate.forEach((elem) => {
+        if (elem.title.toLowerCase() === issueValue && elem.startDate >= dateFrom) {
+          typedElems.push(elem)
+        }
+      })
+    } else if (!statusValue && dateTo !== '9999.99.99' && !dateFrom) {
+      issueDuplicate.forEach((elem) => {
+        if (elem.title.toLowerCase() === issueValue && elem.startDate <= dateTo) {
+          typedElems.push(elem)
+        }
+      })
+    }  else if (!statusValue && dateTo !== '9999.99.99' && !dateFrom) {
+      issueDuplicate.forEach((elem) => {
+        let status = elem.IssueStatusDict.map((el) => el.value.toLowerCase()).join('') 
+        if (elem.title.toLowerCase() === issueValue && status === statusValue && elem.startDate <= dateTo) {
+          typedElems.push(elem)
+        }
+      })
+    }
       itemsPanelBody.firstElementChild.remove()
       const list = document.createElement('UL')
       list.classList.add('list')
       list.append(...createLiFromIssue(typedElems))
       itemsPanelBody.append(list)
-      if (issueValue === '' && statusValue === '') {
-        itemsPanelBody.firstElementChild.remove()
-        itemsPanelBody.append(createLiFromIssue(issueDuplicate))
-      }
     }
   }
 }

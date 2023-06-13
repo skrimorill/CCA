@@ -34,7 +34,6 @@ function ObjForTypedGrouped(obj, from, to, type = '', status = '') {
       let elementsTrueArray = []
       val.map((el) => {
         if (el.startDate > from && el.startDate < to && el.title.toLowerCase() === type.toLowerCase()) {
-          console.log(111);
           elementsTrueArray.push(el)
           ObjTypeMatchInput[key] = elementsTrueArray
         }  

@@ -1,4 +1,4 @@
-import { issueDuplicate, statuses, planetsObj } from "./issue.js"
+import { issueDuplicate, statuses, types, planetsObj } from "./issue.js"
 import { createLiFromIssue } from './createLiFromIssue.js'
 import { ObjForStatusdGrouped, isGroupedLocationStatus } from './groupedByStatus.js'
 
@@ -15,7 +15,7 @@ function sortByStatus(itemsPanelBody) {
     const checkedL = document.querySelector('.location-filter__check')
     const listElements = document.querySelectorAll('.list-item')
     const statusValue = e.target.value.toLowerCase().trim()
-    
+
     objForStatusGrouped = ObjForStatusdGrouped(planetsObj, dateFrom, dateTo, typeValue, statusValue)
     if (checkedL.checked) {
       let list = document.querySelector('.gbl-list')
@@ -24,20 +24,13 @@ function sortByStatus(itemsPanelBody) {
         itemsPanelBody.append(isGroupedLocationStatus(objForStatusGrouped))
       }
     } else {
-    for (let elem of listElements) {
-      if (!statuses.includes(statusValue)) continue
-      if (statuses.includes(statusValue) && statusValue === elem.lastElementChild.innerHTML.toLowerCase().trim()) {
-        elem.classList.remove('hidden')
-      } else {
-        elem.classList.add('hidden')
-      }
-    }
-      if (statusValue === '') {
-      itemsPanelBody.firstElementChild.remove()
-      const list = document.createElement('UL')
-      list.classList.add('list')
-      list.append(...createLiFromIssue(issueDuplicate))
-      itemsPanelBody.append(list)
+      for (let elem of listElements) {
+        if (!statuses.includes(statusValue)) continue
+        if (statusValue === elem.lastElementChild.innerHTML.toLowerCase().trim()) {
+          elem.classList.remove('hidden')
+        } else {
+          elem.classList.add('hidden')
+        }
       }
     }
   }

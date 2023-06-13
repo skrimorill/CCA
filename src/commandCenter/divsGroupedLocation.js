@@ -20,6 +20,12 @@ function GroupedLocationObj(arr) {
   return liGpouped
 }
 
+function clearInputs() {
+  let inputs = document.querySelectorAll('input')
+  inputs.forEach((input) => {
+    input.value = ''
+  })
+}
 
 function isGroupedLocation(liGpouped) {
   const gblList = document.createElement('UL')
@@ -42,6 +48,7 @@ function isGroupedLocation(liGpouped) {
 function appendGroupedList(itemsPanelBody) {
   return (e) => {
     if (e.target.checked) {
+      clearInputs()
       itemsPanelBody.innerHTML = ""
       itemsPanelBody.append(isGroupedLocation(liGpouped))
     } else {

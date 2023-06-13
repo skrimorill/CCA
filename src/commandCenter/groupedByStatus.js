@@ -56,7 +56,7 @@ function ObjForStatusdGrouped(obj, from, to, type = '', status = '') {
 }
 
 
-// console.log(ObjForStatusdGrouped(planetsObj, 'actual'));
+
 
 // Формируем сортированный список, аргумент - ObjTypeMatchInput
 function isGroupedLocationStatus(obj) {
