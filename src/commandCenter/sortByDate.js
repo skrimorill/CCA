@@ -25,27 +25,58 @@ function sortByDateFrom(itemsPanelBody) {
       itemsPanelBody.append(isGroupedLocationDate(objForDateGrouped))
     } else {
       issueDuplicate.forEach((elem) =>  {
-        if (dateTo === '9999.99.99') {
-          if (elem.startDate > dateFrom && itemsPanelBody.firstElementChild) {
+        if(!statusValue && !typeValue) {
+          if (dateTo === '9999.99.99') {
+            if (elem.startDate > dateFrom && itemsPanelBody.firstElementChild) {
+              dateArray.push(elem)
+              itemsPanelBody.firstElementChild.remove()
+              const list = document.createElement('UL')
+              list.classList.add('list')
+              list.append(...createLiFromIssue(dateArray))
+              itemsPanelBody.append(list)
+            } 
+            } else if (dateTo !== '9999.99.99') {
+            if (elem.startDate < dateTo && itemsPanelBody.firstElementChild && elem.startDate > dateFrom) {
+              dateArray.push(elem)
+              itemsPanelBody.firstElementChild.remove()
+              const list = document.createElement('UL')
+              list.classList.add('list')
+              list.append(...createLiFromIssue(dateArray))
+              itemsPanelBody.append(list)
+            } 
+          }
+        } else if (!statusValue && typeValue) {
+          if (elem.startDate < dateTo && itemsPanelBody.firstElementChild && elem.startDate > dateFrom && typeValue === elem.title.toLowerCase()) {
             dateArray.push(elem)
             itemsPanelBody.firstElementChild.remove()
             const list = document.createElement('UL')
             list.classList.add('list')
             list.append(...createLiFromIssue(dateArray))
             itemsPanelBody.append(list)
-          } 
-        } else if (dateTo !== '9999.99.99') {
-          if (elem.startDate < dateTo && itemsPanelBody.firstElementChild && elem.startDate > dateFrom) {
+          }
+        } else if (statusValue && !typeValue) {
+          let status = elem.IssueStatusDict.map((el) => el.value.toLowerCase()).join('')
+          if (elem.startDate < dateTo && itemsPanelBody.firstElementChild && elem.startDate > dateFrom && statusValue === status) {
             dateArray.push(elem)
             itemsPanelBody.firstElementChild.remove()
             const list = document.createElement('UL')
             list.classList.add('list')
             list.append(...createLiFromIssue(dateArray))
             itemsPanelBody.append(list)
-          } 
+          }
+        } else if (statusValue && typeValue) {
+          let status = elem.IssueStatusDict.map((el) => el.value.toLowerCase()).join('')
+          if (elem.startDate < dateTo && itemsPanelBody.firstElementChild && elem.startDate > dateFrom && statusValue === status && typeValue === elem.title.toLowerCase()) {
+            dateArray.push(elem)
+            itemsPanelBody.firstElementChild.remove()
+            const list = document.createElement('UL')
+            list.classList.add('list')
+            list.append(...createLiFromIssue(dateArray))
+            itemsPanelBody.append(list)
+          }
         }
-        })
-        dateArray.length = ''
+      })
+      dateArray.length = ''
     } 
   }
 }
@@ -70,26 +101,57 @@ function sortByDateTo(itemsPanelBody) {
       }
       itemsPanelBody.append(isGroupedLocationDate(objForDateGrouped))
     } else {
-      issueDuplicate.forEach((elem) =>  {
-      if (!dateFrom) {
-        if (elem.startDate < dateTo && itemsPanelBody.firstElementChild) {
-          dateArray.push(elem)
-          itemsPanelBody.firstElementChild.remove()
-          const list = document.createElement('UL')
-          list.classList.add('list')
-          list.append(...createLiFromIssue(dateArray))
-          itemsPanelBody.append(list)
-        } 
-      } else if (dateFrom) {
-        if (elem.startDate < dateTo && itemsPanelBody.firstElementChild && elem.startDate > dateFrom) {
-          dateArray.push(elem)
-          itemsPanelBody.firstElementChild.remove()
-          const list = document.createElement('UL')
-          list.classList.add('list')
-          list.append(...createLiFromIssue(dateArray))
-          itemsPanelBody.append(list)
-        } 
-      }
+        issueDuplicate.forEach((elem) =>  {
+          if(!statusValue && !typeValue) {
+            if (!dateFrom) {
+              if (elem.startDate < dateTo && itemsPanelBody.firstElementChild) {
+                dateArray.push(elem)
+                itemsPanelBody.firstElementChild.remove()
+                const list = document.createElement('UL')
+                list.classList.add('list')
+                list.append(...createLiFromIssue(dateArray))
+                itemsPanelBody.append(list)
+              } 
+                } else if (dateFrom) {
+              if (elem.startDate < dateTo && itemsPanelBody.firstElementChild && elem.startDate > dateFrom) {
+                dateArray.push(elem)
+                itemsPanelBody.firstElementChild.remove()
+                const list = document.createElement('UL')
+                list.classList.add('list')
+                list.append(...createLiFromIssue(dateArray))
+                itemsPanelBody.append(list)
+              } 
+            }
+          } else if (!statusValue && typeValue) {
+            if (elem.startDate < dateTo && itemsPanelBody.firstElementChild && elem.startDate > dateFrom && typeValue === elem.title.toLowerCase()) {
+              dateArray.push(elem)
+              itemsPanelBody.firstElementChild.remove()
+              const list = document.createElement('UL')
+              list.classList.add('list')
+              list.append(...createLiFromIssue(dateArray))
+              itemsPanelBody.append(list)
+            }
+          } else if (statusValue && !typeValue) {
+            let status = elem.IssueStatusDict.map((el) => el.value.toLowerCase()).join('')
+            if (elem.startDate < dateTo && itemsPanelBody.firstElementChild && elem.startDate > dateFrom && statusValue === status) {
+              dateArray.push(elem)
+              itemsPanelBody.firstElementChild.remove()
+              const list = document.createElement('UL')
+              list.classList.add('list')
+              list.append(...createLiFromIssue(dateArray))
+              itemsPanelBody.append(list)
+            }
+          } else if (statusValue && typeValue) {
+          let status = elem.IssueStatusDict.map((el) => el.value.toLowerCase()).join('')
+          if (elem.startDate < dateTo && itemsPanelBody.firstElementChild && elem.startDate > dateFrom && statusValue === status && typeValue === elem.title.toLowerCase()) {
+            dateArray.push(elem)
+            itemsPanelBody.firstElementChild.remove()
+            const list = document.createElement('UL')
+            list.classList.add('list')
+            list.append(...createLiFromIssue(dateArray))
+            itemsPanelBody.append(list)
+          }
+        }
       })
       dateArray.length = ''
     }

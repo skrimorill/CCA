@@ -70,15 +70,3 @@ dateVal.forEach((elem) => {
     }
   })
 })
-
-
-// let sortPanel = document.querySelector('.sort-panel__date-inputs')
-// // console.log(sortPanel);
-
-// sortPanel.addEventListener('click', (e) => {
-//   console.log(e.target);
-//   console.log(e);
-//   if (e.target.classList.contains('.issue-date-from')) {
-//     console.log(e.target.value);
-//   }
-// })

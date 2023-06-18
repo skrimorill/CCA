@@ -121,7 +121,16 @@ function createGroupedByDateList(location, array, from, to, type, status) {
         LI.innerHTML += isStatusDict(elem) 
         locDateList.append(LI) 
     }
+  } else if (status && type && to !== '9999.99.99') {
+    if (loc === location && (date > from && date < to) && statusFromIssue === status && typeFromIssue === type.toLowerCase()) {
+      const LI = document.createElement("LI")
+      LI.classList.add('location-item')
+      LI.innerHTML += isTitle(elem)
+      LI.innerHTML += isStartDate(elem)
+      LI.innerHTML += isStatusDict(elem) 
+      locDateList.append(LI) 
   }
+}
 })
   return locDateList
 }

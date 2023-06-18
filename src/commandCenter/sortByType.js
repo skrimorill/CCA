@@ -4,6 +4,7 @@ import { ObjForTypedGrouped, isGroupedLocationType } from './groupedByType.js'
 
 
 
+
 function sortByType(itemsPanelBody) {
   return (e) => {
     let objForTypeGrouped = {}
@@ -37,7 +38,6 @@ function sortByType(itemsPanelBody) {
         let status = elem.IssueStatusDict.map((el) => el.value.toLowerCase()).join('') 
         if (elem.title.toLowerCase() === issueValue && status === statusValue) {
           typedElems.push(elem)
-          console.log(elem.startDate);
         }
       })
     } else if (statusValue && dateTo === '9999.99.99' && dateFrom) { 
@@ -54,6 +54,13 @@ function sortByType(itemsPanelBody) {
           typedElems.push(elem)
         }
       })
+    } else if (statusValue && dateTo !== '9999.99.99' && !dateFrom) {
+      issueDuplicate.forEach((elem) => {
+        let status = elem.IssueStatusDict.map((el) => el.value.toLowerCase()).join('') 
+        if (elem.title.toLowerCase() === issueValue && status === statusValue && elem.startDate <= dateTo) {
+          typedElems.push(elem)
+        }
+      })
     } else if (!statusValue && dateTo === '9999.99.99' && dateFrom) {
       issueDuplicate.forEach((elem) => {
         if (elem.title.toLowerCase() === issueValue && elem.startDate >= dateFrom) {
@@ -66,7 +73,7 @@ function sortByType(itemsPanelBody) {
           typedElems.push(elem)
         }
       })
-    }  else if (!statusValue && dateTo !== '9999.99.99' && !dateFrom) {
+    }  else if (!statusValue && dateTo !== '9999.99.99' && dateFrom) {
       issueDuplicate.forEach((elem) => {
         let status = elem.IssueStatusDict.map((el) => el.value.toLowerCase()).join('') 
         if (elem.title.toLowerCase() === issueValue && status === statusValue && elem.startDate <= dateTo) {
