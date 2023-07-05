@@ -55,7 +55,7 @@ function issueGenerator() {
 
 fillIssue()
 function fillIssue() {
-  while (issue.length < 100) { 
+  while (issue.length < 30000) { 
     issue.push(issueGenerator())
   }
 }
